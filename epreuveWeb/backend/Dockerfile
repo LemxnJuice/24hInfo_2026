@@ -8,6 +8,8 @@ RUN npm ci || npm install
 # copy sources
 COPY . .
 
+# generate prisma client
+RUN npx prisma generate || true
 # build
 RUN npm run build || true
 
