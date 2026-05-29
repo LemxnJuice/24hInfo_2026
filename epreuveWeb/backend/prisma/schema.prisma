@@ -1,0 +1,49 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  ads       Ad[]
+  favorites Favorite[]
+}
+
+model Ad {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  price       Float
+  city        String
+  region      String?
+  categories  String
+  images      String[]
+  contact     String
+  isHidden    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  ownerId     Int
+  owner       User     @relation(fields: [ownerId], references: [id])
+}
+
+model Favorite {
+  id     Int @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  ad     Ad   @relation(fields: [adId], references: [id])
+  adId   Int
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
