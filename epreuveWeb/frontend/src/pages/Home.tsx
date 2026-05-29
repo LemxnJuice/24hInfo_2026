@@ -1,24 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   const [ads, setAds] = useState<any[]>([]);
 
   useEffect(() => {
-    axios.get('/api/ads').then(r => setAds(r.data)).catch(() => {});
+    axios
+      .get("/api/ads")
+      .then((r) => {
+        const data = r && (r.data ?? r);
+        if (Array.isArray(data)) {
+          setAds(data);
+        } else {
+          console.warn(
+            "Unexpected /api/ads response, expected array but got:",
+            data,
+          );
+          setAds([]);
+        }
+      })
+      .catch((err) => {
+        console.warn("Failed to fetch ads", err);
+        setAds([]);
+      });
   }, []);
 
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">Annonces récentes</h2>
-      <div className="grid gap-4">
-        {ads.map(a => (
-          <div key={a.id} className="border p-3 rounded">
-            <h3 className="font-bold">{a.title} - {a.price}€</h3>
-            <p className="text-sm text-gray-600">{a.city} - {a.categories}</p>
-            <p>{a.description}</p>
-          </div>
-        ))}
+      <h2 className="page-title">Annonces récentes</h2>
+      <div className="cards">
+        {Array.isArray(ads) && ads.length > 0 ? (
+          ads.map((a: any) => (
+            <div key={a.id} className="card">
+              <h3>
+                {a.title} - {a.price}€
+              </h3>
+              <p className="card-meta">
+                {a.city} - {a.categories}
+              </p>
+              <p>{a.description}</p>
+            </div>
+          ))
+        ) : (
+          <div className="text-muted">Aucune annonce pour le moment.</div>
+        )}
       </div>
     </div>
   );

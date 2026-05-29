@@ -13,5 +13,9 @@ RUN npx prisma generate || true
 # build
 RUN npm run build || true
 
+# copy startup script and make executable
+COPY start.sh ./
+RUN chmod +x ./start.sh
+
 EXPOSE 4000
-CMD ["node", "dist/index.js"]
+CMD ["sh", "./start.sh"]

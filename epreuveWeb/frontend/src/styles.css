@@ -1,0 +1,84 @@
+:root{
+  --accent: #1e60a8;
+  --muted: #6b7280;
+  --bg: #f6f8fb;
+  --card-bg: #ffffff;
+  --border: #e6e9ee;
+  --text: #0f172a;
+  --danger: #9b1a1a;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.app-container{
+  max-width:980px;
+  margin:28px auto;
+  padding:18px;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:700;
+  color:var(--accent);
+  text-decoration:none;
+}
+
+.nav a{
+  margin-left:12px;
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:600;
+}
+
+.nav a:hover{ text-decoration:underline }
+
+.page-title{ font-size:18px; font-weight:600; margin-bottom:12px }
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px;
+}
+
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  padding:12px;
+  border-radius:8px;
+  box-shadow:0 1px 2px rgba(16,24,40,0.03);
+}
+.card h3{ margin:0 0 6px 0; font-size:1rem }
+.card-meta{ color:var(--muted); font-size:0.92rem; margin-bottom:8px }
+.card p{ margin:0; color: #111827; font-size:0.95rem }
+
+.form-container{ max-width:480px; margin:0 auto; background:var(--card-bg); padding:16px; border-radius:10px; border:1px solid var(--border) }
+.form-field{ display:flex; flex-direction:column; gap:6px; margin-bottom:12px }
+.input{ padding:10px 12px; border-radius:8px; border:1px solid var(--border); font-size:0.95rem }
+.label{ font-weight:600; font-size:0.95rem }
+.btn{ display:inline-block; padding:10px 14px; background:var(--accent); color:white; border-radius:8px; border:none; cursor:pointer; font-weight:600 }
+.btn.secondary{ background:transparent; color:var(--accent); border:1px solid var(--border) }
+.text-muted{ color:var(--muted) }
+
+.alert{ background:#fff7f7; color:var(--danger); padding:10px; border-radius:8px; border:1px solid #f5c2c2 }
+
+.error-boundary pre{ white-space:pre-wrap; background:#fff; padding:10px; border-radius:6px; border:1px solid var(--border) }
+
+/* responsive */
+@media (max-width:520px){
+  .cards{ grid-template-columns:1fr }
+  .app-container{ padding:12px; margin:10px }
+}
